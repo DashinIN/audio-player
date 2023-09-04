@@ -48,6 +48,29 @@
 
 
 const audioDataList = []
+const audioNames = [
+    "DK feat. Вирус - Ты меня не ищи.mp3",
+    "EQRIC, JOZUA, ROBBE - TiK ToK.mp3",
+    "EQRIC, Noreal, Muffin - In The Name Of Love.mp3",
+    "Geoxor - Virtual.mp3",
+    "Harddope, Halvorsen, LexMorris - More Than You Know.mp3",
+    "Kavinsky - Nightcall.mp3",
+    "NITO-ONNA, MORFI, EQRIC - Hot N Cold.mp3",
+    "Paul Engemann - Scarface (Push It To The Limit).mp3"
+]
+
+for (let name of audioNames) {
+    const nameArr = name.split(".")
+    nameArr.pop()
+    const songName = nameArr.join(' ')
+
+    const audioDataItem = {
+        name: songName,
+        src: './audio/' + name,
+        playlists: ['Моя музыка']
+    }
+    audioDataList.push(audioDataItem)
+}
 
 const playlist =  document.querySelector('.playlist');
 
@@ -64,13 +87,9 @@ addForm.addEventListener('submit', function (e) {
 });
 
 
-
-
 const modal = document.querySelector('.modal');
 const openModalButton = document.querySelector('.addItem');
 const closeModalButton = document.querySelector('.close');
-
-
 
 const openModal = (modal) => {
     document.body.style.overflow = "hidden";
@@ -91,34 +110,75 @@ window.onclick = function(event) {
     }
   }
 
-  const audioPlayer = document.getElementById('audioPlayer');
-  const audioFolderURL = 'audio/'
-  window.addEventListener('load', function () {
-  fetch(audioFolderURL)
-  .then(response => response.text())
-  .then(data => {
-      const parser = new DOMParser();
-      const htmlDoc = parser.parseFromString(data, 'text/html');
-      const links = htmlDoc.querySelectorAll('a');
-      
-      const fitleredLinks = Array.from(links).slice(3)
-      fitleredLinks.forEach(link => {
-          const audioDataItem = {
-            name: link.title,
-            src: audioFolderURL + link.title,
-            playlists: ['Моя музыка']
-          }
-          audioDataList.push(audioDataItem)
-      });
-  })
-  .catch(error => console.error('Ошибка при получении списка аудиофайлов:', error));
-  })
+
+const audioPlayer = document.getElementById('audioPlayer');
+const playlists = [{name: 'Моя музыка'}]
+const playlistsRow =  document.querySelector('.playlists__row');
 
 
-  const playlists = [{name: 'Моя музыка'}]
-  const playlistsRow =  document.querySelector('.playlists__row');
+const updatePlaylist = (item) => {
+    const playlistSongs = audioDataList.filter(song => song.playlists.includes(item.name))
+    for(let song of playlistSongs) {
+        const itemWrapper = document.createElement('div');
+        itemWrapper.className = 'item__wrapper'
+        itemWrapper.textContent = song.name
 
-  const createPlaylistBlock = (item) => {
+        const buttonsField = document.createElement('div');
+        buttonsField.className = 'buttons__field'
+
+
+        if(playlists.length > 1) {
+            const addToPlaylistButton = document.createElement('button');
+            const addToPlaylist =  document.createElement('select');
+
+            const emptyOption =  document.createElement('option');
+            emptyOption.textContent = 'Добавить в плейлист'
+            addToPlaylist.appendChild(emptyOption)
+
+            for (let i = 1; i < playlists.length; i++) {
+                    if(!song.playlists.includes(playlists[i].name)) {
+                        const addToPlaylistOption =  document.createElement('option');
+                        addToPlaylistOption.textContent = playlists[i].name
+                        addToPlaylist.appendChild(addToPlaylistOption)
+                    }
+                }
+            addToPlaylist.addEventListener('change', () => {
+                console.log("wow")
+                if(addToPlaylist.value !== 'Добавить в плейлист' 
+                && !song.playlists.includes(addToPlaylist.value)) {
+                    song.playlists.push(addToPlaylist.value)
+                    console.log(song.playlists)
+                }
+            })
+            
+            addToPlaylistButton.appendChild(addToPlaylist)
+            buttonsField.appendChild(addToPlaylistButton)
+        }
+
+        const deleteFromPlaylistButton = document.createElement('button');
+        deleteFromPlaylistButton.textContent = 'x';
+        deleteFromPlaylistButton.addEventListener('click', () => {
+            song.playlists = song.playlists.filter(playlist =>  playlist!== item.name)
+            console.log(song.playlists)
+            console.log(item.name)
+            itemWrapper.remove()
+        })
+
+        buttonsField.appendChild(deleteFromPlaylistButton)
+        itemWrapper.appendChild(buttonsField)
+        
+        itemWrapper.addEventListener('click', function () {
+            playerWrapper.style.display = 'flex'
+            playerName.textContent = song.name
+            audioPlayer.src = song.src;
+            audioPlayer.play();
+            playPauseButton.innerHTML = 'Пауза';
+        });
+        playlist.appendChild(itemWrapper)
+    }
+}
+
+const createPlaylistBlock = (item) => {
     const playlistWrapper = document.createElement('div')
     playlistWrapper.className = 'playlist__wrapper'
 
@@ -126,26 +186,12 @@ window.onclick = function(event) {
     playlistTitle.textContent = item.name
     playlistWrapper.appendChild(playlistTitle);
 
+    playlist.replaceChildren();
+        updatePlaylist(item)
+
     playlistWrapper.addEventListener('click', () => {
         playlist.replaceChildren();
-        const playlistSongs = audioDataList.filter(song => song.playlists.includes(item.name))
-        for(let song of playlistSongs) {
-            const itemWrapper = document.createElement('div');
-            itemWrapper.className = 'item__wrapper'
-            const nameArr = song.name.split(".")
-            nameArr.pop()
-            const songName = nameArr.join(' ')
-            itemWrapper.textContent = songName
-            itemWrapper.addEventListener('click', function () {
-                playerWrapper.style.display = 'block'
-                playerName.textContent = songName
-                audioPlayer.src = song.src;
-                audioPlayer.play();
-                playPauseButton.innerHTML = 'Пауза';
-            });
-            playlist.appendChild(itemWrapper)
-        }
-        
+        updatePlaylist(item)
     })
 
     return playlistWrapper
@@ -164,7 +210,10 @@ window.onclick = function(event) {
     if(!addPlaylistInput.value) {
         return
     }
+    playlists.push({name: addPlaylistInput.value})
     const block = createPlaylistBlock({name: addPlaylistInput.value});
     playlistsRow.appendChild(block)
+
     addPlaylistInput.value = ''
+    
  })

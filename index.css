@@ -52,24 +52,65 @@ body {
 
 
 .content {
-    position: relative;
     width: 100%;
+    overflow: hidden;
 }
 .playlist {
     display: flex;
     flex-direction: column;
     gap: 12px;
     padding: 15px;
+    max-height: calc(100% - 70px);
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
-.player__wrapper {
+.item__wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border: 1px solid blue;
+    border-radius: 12px;
+}
+
+.item__wrapper button {
+    position: relative;
+}
+
+.item__wrapper select {
     position: absolute;
-    bottom: 0;
     display: none;
+    right: 0;
+}
+
+.item__wrapper button:hover select {
+    display: block;
+}
+
+
+
+.player__wrapper {
+    height: 70px;
+    display: none;
+    padding: 20px;
 }
 
 .player {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.player__part {
+    display: flex;
+    align-items: center;
+}
+
+
+
+.time__bar {
+   width: 300px;
 }
 
 
@@ -119,11 +160,7 @@ body {
     justify-self: flex-end;
 }
 
-.item__wrapper {
-    padding: 20px;
-    border: 1px solid blue;
-    border-radius: 12px;
-}
+
 
 @media (min-width: 1024px) {
     .modal {
