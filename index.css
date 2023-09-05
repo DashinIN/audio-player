@@ -10,7 +10,15 @@ button {
     border-radius: 6px;
     padding: 10px;
     font-size: 1rem;
+    cursor: pointer;
 }
+
+input[type=range]{
+    cursor: pointer;
+}
+
+
+
 
 body {
     font-family: sans-serif;
@@ -71,11 +79,14 @@ body {
     padding: 20px;
     border: 1px solid blue;
     border-radius: 12px;
+    transition: all .3s ease;
+    cursor: pointer;
 }
 
 .item__wrapper button {
     position: relative;
 }
+
 
 .item__wrapper select {
     position: absolute;
@@ -84,7 +95,17 @@ body {
 }
 
 .item__wrapper button:hover select {
-    display: block;
+    display: inline-block;
+}
+
+.item__wrapper select.opened {
+    display: inline-block;
+}
+
+.item__wrapper.playing {
+    color: white;
+    background-color: blueviolet;
+    border: 1px solid white;
 }
 
 
@@ -156,6 +177,8 @@ body {
     align-self: flex-end;
     justify-self: flex-end;
 }
+
+
 
 
 

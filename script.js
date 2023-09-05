@@ -111,7 +111,7 @@ window.onclick = function(event) {
   }
 
 
-const audioPlayer = document.getElementById('audioPlayer');
+
 const playlists = [{name: 'Моя музыка'}]
 const playlistsRow =  document.querySelector('.playlists__row');
 
@@ -143,13 +143,26 @@ const updatePlaylist = (item) => {
                     }
                 }
             addToPlaylist.addEventListener('change', () => {
-                console.log("wow")
                 if(addToPlaylist.value !== 'Добавить в плейлист' 
                 && !song.playlists.includes(addToPlaylist.value)) {
                     song.playlists.push(addToPlaylist.value)
                     console.log(song.playlists)
                 }
             })
+            addToPlaylist.addEventListener('click', (e) => {
+                addToPlaylist.classList.remove('opened')
+                e.stopPropagation()
+             })
+             addToPlaylistButton.addEventListener('click', (e) => {
+                e.stopPropagation()
+                if(!addToPlaylist.classList.contains('opened')) {
+                    addToPlaylist.classList.add('opened')
+                } else {
+                    addToPlaylist.classList.remove('opened')
+                }
+                
+             })
+
             
             addToPlaylistButton.appendChild(addToPlaylist)
             buttonsField.appendChild(addToPlaylistButton)
@@ -157,7 +170,8 @@ const updatePlaylist = (item) => {
 
         const deleteFromPlaylistButton = document.createElement('button');
         deleteFromPlaylistButton.textContent = 'x';
-        deleteFromPlaylistButton.addEventListener('click', () => {
+        deleteFromPlaylistButton.addEventListener('click', (e) => {
+            e.stopPropagation()
             song.playlists = song.playlists.filter(playlist =>  playlist!== item.name)
             console.log(song.playlists)
             console.log(item.name)
@@ -168,11 +182,34 @@ const updatePlaylist = (item) => {
         itemWrapper.appendChild(buttonsField)
         
         itemWrapper.addEventListener('click', function () {
+            const itemWrappers =  document.querySelectorAll('.item__wrapper');
+            
             playerWrapper.style.display = 'flex'
-            playerName.textContent = song.name
-            audioPlayer.src = song.src;
-            audioPlayer.play();
-            playPauseButton.innerHTML = 'Пауза';
+            if(playerName.textContent !== song.name) {
+                for (let item of itemWrappers) {
+                    if(item.classList.contains('playing')) {
+                        item.classList.remove('playing')
+                    }
+                }
+                audio.src = song.src;
+                audio.play();
+                playPauseButton.innerHTML = 'Пауза';
+                playerName.textContent = song.name
+                itemWrapper.classList.add('playing')
+            } else {
+                if (audio.paused) {
+                    audio.play();
+                    playPauseButton.innerHTML = 'Пауза';
+                    itemWrapper.classList.add('playing')
+                } else {
+                    audio.pause();
+                    playPauseButton.innerHTML = 'Воспроизвести';
+                    itemWrapper.classList.remove('playing')
+                }
+
+            }
+            
+           
         });
         playlist.appendChild(itemWrapper)
     }
