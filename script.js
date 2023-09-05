@@ -19,15 +19,68 @@
         }
     });
 
-    audio.addEventListener('timeupdate', function () {
-        seekBar.value = audio.currentTime;
-        currentTime.innerHTML = formatTime(audio.currentTime);
-        totalTime.innerHTML = formatTime(audio.duration);
-    });
+    let updateInterval;
 
-    seekBar.addEventListener('change', function () {
-        audio.currentTime = seekBar.value;
-    });
+audio.addEventListener('timeupdate', function () {
+    const currentTimeInSeconds = audio.currentTime;
+    const durationInSeconds = audio.duration;
+
+    // Вычисляем прогресс в процентах
+    const progressPercentage = (currentTimeInSeconds / durationInSeconds) * 100;
+
+    // Устанавливаем значение seekBar
+    seekBar.value = progressPercentage;
+
+    currentTime.innerHTML = formatTime(currentTimeInSeconds);
+    totalTime.innerHTML = formatTime(durationInSeconds);
+});
+
+audio.addEventListener('play', function () {
+    updateInterval = setInterval(function () {
+        const currentTimeInSeconds = audio.currentTime;
+        const durationInSeconds = audio.duration;
+
+        // Вычисляем прогресс в процентах
+        const progressPercentage = (currentTimeInSeconds / durationInSeconds) * 100;
+
+        // Устанавливаем значение seekBar
+        seekBar.value = progressPercentage;
+
+        currentTime.innerHTML = formatTime(currentTimeInSeconds);
+        totalTime.innerHTML = formatTime(durationInSeconds);
+    }, 1000); // Обновление каждую секунду
+});
+
+audio.addEventListener('pause', function () {
+    clearInterval(updateInterval);
+});
+
+seekBar.addEventListener('input', function () {
+    clearInterval(updateInterval);
+    const seekTime = (seekBar.value / 100) * audio.duration;
+    audio.currentTime = seekTime;
+});
+
+seekBar.addEventListener('change', function () {
+    updateInterval = setInterval(function () {
+        const currentTimeInSeconds = audio.currentTime;
+        const durationInSeconds = audio.duration;
+
+        // Вычисляем прогресс в процентах
+        const progressPercentage = (currentTimeInSeconds / durationInSeconds) * 100;
+
+        // Устанавливаем значение seekBar
+        seekBar.value = progressPercentage;
+
+        currentTime.innerHTML = formatTime(currentTimeInSeconds);
+        totalTime.innerHTML = formatTime(durationInSeconds);
+    }, 1000); // Обновление каждую секунду
+});
+
+    
+
+    
+
 
     volumeBar.addEventListener('change', function () {
         audio.volume = volumeBar.value;
@@ -71,6 +124,8 @@ for (let name of audioNames) {
     }
     audioDataList.push(audioDataItem)
 }
+
+let currentPlaylist = audioDataList
 
 const playlist =  document.querySelector('.playlist');
 
@@ -118,6 +173,7 @@ const playlistsRow =  document.querySelector('.playlists__row');
 
 const updatePlaylist = (item) => {
     const playlistSongs = audioDataList.filter(song => song.playlists.includes(item.name))
+    currentPlaylist = playlistSongs
     for(let song of playlistSongs) {
         const itemWrapper = document.createElement('div');
         itemWrapper.className = 'item__wrapper'
@@ -211,7 +267,7 @@ const updatePlaylist = (item) => {
             
            
         });
-        playlist.appendChild(itemWrapper)
+        playlist.appendChild(itemWrapper) 
     }
 }
 
@@ -238,6 +294,30 @@ const createPlaylistBlock = (item) => {
     const block = createPlaylistBlock(item);
     playlistsRow.appendChild(block)
   })
+
+  audio.addEventListener('ended', function () {
+    const currentTrackIndex = currentPlaylist.findIndex(
+        item => item.name === playerName.textContent);
+
+    if (currentTrackIndex < currentPlaylist.length - 1) {
+        const itemWrappers =  document.querySelectorAll('.item__wrapper');
+            for (let item of itemWrappers) {
+                if(item.classList.contains('playing')) {
+                     item.classList.remove('playing')
+                }
+            }
+            audio.src = currentPlaylist[currentTrackIndex+1].src;
+            audio.play();
+            playPauseButton.innerHTML = 'Пауза';
+            playerName.textContent = currentPlaylist[currentTrackIndex+1].name
+            console.log(itemWrappers)
+            itemWrappers[currentTrackIndex+1].classList.add('playing')
+
+    }
+});
+
+
+
 
 
  const addPlaylistInput =  document.querySelector('.playlist__name');
