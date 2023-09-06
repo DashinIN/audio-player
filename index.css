@@ -18,10 +18,19 @@ input[type=range]{
 
 
 
-
 body {
     font-family: sans-serif;
     height: 100vh;
+}
+
+*::-webkit-scrollbar{
+    width: 10px;
+    height: 10px;
+    background-color:  white;	
+}
+
+*::-webkit-scrollbar-thumb{
+    background-color:  blueviolet;	
 }
 
 .header {
@@ -44,6 +53,7 @@ body {
     background-color: blueviolet;
     display: flex;
     flex-direction: column;
+    box-shadow: 1px -1px 3px blueviolet;
 }
 
 .playlists__row {
@@ -159,7 +169,8 @@ body {
     display: none;
     padding: 20px;
     margin-top: auto;
-    box-shadow: 0px -1px 1px rgba(137, 43, 226, 0.445);
+    box-shadow: -1px -1px 3px rgba(137, 43, 226, 0.445);
+    z-index: 20;
 }
 
 .player {
@@ -210,7 +221,7 @@ body {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 999;
     left: 0;
     top: 0;
     width: 100%;

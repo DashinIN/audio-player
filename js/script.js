@@ -185,6 +185,11 @@ playlists.forEach(item => {
     playlistsRow.appendChild(block)
 })
 
+const playlistWrappers =  document.querySelectorAll('.playlist__wrapper');
+console.log(playlistWrappers)
+playlistWrappers[playlistWrappers.length-1].classList.add('selected')
+
+
 audio.addEventListener('ended', function () {
     const currentTrackIndex = currentPlaylist.findIndex(
         item => item.name === playerName.textContent);

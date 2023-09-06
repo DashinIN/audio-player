@@ -25,7 +25,7 @@ function draw() {
     for (let i = 0; i < bufferLength; i++) {
         barHeight = dataArray[i] / 2;
 
-        canvasContext.fillStyle = `rgb(${barHeight + 100}, 50, 200)`;
+        canvasContext.fillStyle = `rgb(${barHeight + 50}, 40, 230)`;
         canvasContext.fillRect(x, audioVisualizer.height - barHeight / 2, barWidth, barHeight);
 
         x += barWidth + 1;
