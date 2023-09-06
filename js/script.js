@@ -107,6 +107,7 @@ const updatePlaylist = (item) => {
         const buttonsField = document.createElement('div');
         buttonsField.className = 'buttons__field'
         const deleteFromPlaylistButton = createDeleteButton()
+
         deleteFromPlaylistButton.addEventListener('click', (e) => {
             e.stopPropagation()
             song.playlists = song.playlists.filter(playlist =>  playlist!== item.name)
@@ -165,6 +166,13 @@ const createPlaylistBlock = (item) => {
     updatePlaylist(item)
 
     playlistWrapper.addEventListener('click', () => {
+        const playlistWrappers =  document.querySelectorAll('.playlist__wrapper');
+        for(let item of playlistWrappers) {
+            if(item.classList.contains('selected')) {
+                item.classList.remove('selected')
+            }
+        }
+        playlistWrapper.classList.add('selected')
         playlist.replaceChildren();
         updatePlaylist(item)
     })
@@ -192,7 +200,6 @@ audio.addEventListener('ended', function () {
             audio.play();
             playPauseButton.src = './assets/pause.svg'
             playerName.textContent = currentPlaylist[currentTrackIndex+1].name
-            console.log(itemWrappers)
             itemWrappers[currentTrackIndex+1].classList.add('playing')
 
     }

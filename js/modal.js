@@ -6,7 +6,7 @@ const addForm =  document.querySelector('.add__form');
 addForm.addEventListener('submit', e => {
     e.preventDefault()
     let file = fileInput.files[0];
-    
+    console.log(file)
 });
 
 
