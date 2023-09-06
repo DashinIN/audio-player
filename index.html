@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./index.css">
     <title>title</title>
+
 </head>
 <body>
     <header class="header">
-        <h1 class="header__title">header</h1>
+        <h1 class="header__title">Audio player</h1>
         <nav class="header__nav">
             <button class="addItem">Добавить</button>
         </nav>
@@ -25,21 +26,24 @@
             <button class="sidebar__toggle">change</button>
         </aside>
         <div class="content">
+            <canvas id="audioVisualizer" ></canvas>
             <div class="playlist">
 
             </div>
             <div class="player__wrapper">
                 <audio   id="audioPlayer" display="none" preload="metadata"></audio>
                 <div class="player">
-                
                     <div class="player__part">
-                        <button class="play__button">Воспроизвести</button>
+                        <button class="play__button">
+                            <img src="./assets/play.svg" alt="play">
+                        </button>
                         <p class="player__name"></p>
                         
                     </div>
                     <div class="player__part">
                         <input type="range" class="time__bar" min="0" step="1" value="0">
                         <span class="current__time">0:00</span> / <span class="total__time">0:00</span>
+                        <img src="./assets/volume.svg" alt="volume">
                         <input type="range" class="volume__bar" min="0" max="1" step="0.1" value="1">
                     </div>
                 </div>
@@ -62,10 +66,11 @@
         </div>
     </div>
 
-    
-   
 
-    <script src="script.js"></script>
+    <script  type="module" src="./js/player.js"></script>
+    <script src="./js/modal.js"></script>
+    <script src="./js/visualizer.js"></script>
+    <script  type="module" src="./js/script.js"></script>
 </body>
 </html>
 

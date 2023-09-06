@@ -6,11 +6,10 @@
 
 button {
     background-color: white;
-    border: 1px solid black;
-    border-radius: 6px;
     padding: 10px;
     font-size: 1rem;
     cursor: pointer;
+    border: 1px solid transparent;
 }
 
 input[type=range]{
@@ -62,6 +61,8 @@ body {
 .content {
     width: 100%;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 .playlist {
     display: flex;
@@ -76,11 +77,14 @@ body {
 .item__wrapper {
     display: flex;
     justify-content: space-between;
-    padding: 20px;
-    border: 1px solid blue;
+    align-items: center;
+    padding: 15px 20px;
+    border: 1px solid transparent;
+    box-shadow: 1px 1px 10px rgba(137, 43, 226, 0.308);
     border-radius: 12px;
     transition: all .3s ease;
     cursor: pointer;
+    letter-spacing: .6px;
 }
 
 .item__wrapper button {
@@ -103,17 +107,48 @@ body {
 }
 
 .item__wrapper.playing {
-    color: white;
-    background-color: blueviolet;
-    border: 1px solid white;
+    background-color: rgba(137, 43, 226, 0.274);
+    border: 1px solid rgb(2, 2, 2);
+}
+
+.buttons__field {
+    display: flex;
+    user-select: none;
 }
 
 
+.delete__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    background-color: inherit;
+    transition: all .3s ease;
+    color: red;
+}
+
+.delete__button:hover {
+    border: 1px solid black;
+}
+
+.delete__button img {
+    width: 15px;
+    height: 15px;
+}
+
+#audioVisualizer {
+    display: block;
+    width: 100%;
+    height: 70px;
+    box-shadow: 0px 1px 1px rgba(137, 43, 226, 0.445);
+  }
 
 .player__wrapper {
     height: 140px;
     display: none;
     padding: 20px;
+    margin-top: auto;
+    box-shadow: 0px -1px 1px rgba(137, 43, 226, 0.445);
 }
 
 .player {
@@ -122,12 +157,43 @@ body {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    font-size: 0.9rem;
+    letter-spacing: 0.7px;
+}
+
+.current__time {
+    margin-left: 15px;
+}
+.total__time {
+    margin-right: 15px;
 }
 
 .player__part {
     display: flex;
     align-items: center;
 }
+
+.player__part img {
+    width: 25px;
+    height: 25px;
+    margin-right: 15px;
+}
+.play__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 10px;
+}
+
+
+
+
+.play__button img {
+    width: 25px;
+    height: 25px;
+}
+
 
 
 .modal {
@@ -210,6 +276,95 @@ body {
     }
 
     .time__bar {
-        width: 300px;
+        width: 350px;
     }
 }
+
+
+input[type=range] {
+    height: 25px;
+    -webkit-appearance: none;
+    margin: 10px 0;
+  }
+  input[type=range]:focus {
+    outline: none;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    height: 5px;
+    cursor: pointer;
+    animate: 0.2s;
+    box-shadow: 0px 0px 0px #000000;
+    background: blueviolet;
+    border-radius: 1px;
+    border: 0px solid #000000;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    box-shadow: 0px 0px 0px #000000;
+    border: 1px solid blueviolet;
+    height: 18px;
+    width: 18px;
+    border-radius: 25px;
+    background: rgba(137, 43, 226, 0.438);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -7px;
+  }
+  input[type=range]:focus::-webkit-slider-runnable-track {
+    background: blueviolet;
+  }
+  input[type=range]::-moz-range-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    animate: 0.2s;
+    box-shadow: 0px 0px 0px #000000;
+    background: blueviolet;
+    border-radius: 1px;
+    border: 0px solid #000000;
+  }
+  input[type=range]::-moz-range-thumb {
+    box-shadow: 0px 0px 0px #000000;
+    border: 1px solid blueviolet;
+    height: 18px;
+    width: 18px;
+    border-radius: 25px;
+    background: ;
+    cursor: pointer;
+  }
+  input[type=range]::-ms-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    animate: 0.2s;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+  }
+  input[type=range]::-ms-fill-lower {
+    background: blueviolet;
+    border: 0px solid #000000;
+    border-radius: 2px;
+    box-shadow: 0px 0px 0px #000000;
+  }
+  input[type=range]::-ms-fill-upper {
+    background: blueviolet;
+    border: 0px solid #000000;
+    border-radius: 2px;
+    box-shadow: 0px 0px 0px #000000;
+  }
+  input[type=range]::-ms-thumb {
+    margin-top: 1px;
+    box-shadow: 0px 0px 0px #000000;
+    border: 1px solid blueviolet;
+    height: 18px;
+    width: 18px;
+    border-radius: 25px;
+    background: rgba(137, 43, 226, 0.438);
+    cursor: pointer;
+  }
+  input[type=range]:focus::-ms-fill-lower {
+    background: blueviolet;
+  }
+  input[type=range]:focus::-ms-fill-upper {
+    background: blueviolet;
+  }
