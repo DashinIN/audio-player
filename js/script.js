@@ -4,8 +4,8 @@ const playPauseButton =  document.querySelector('.play__button img');
 const playerWrapper =  document.querySelector('.player__wrapper');
 const playerName =  document.querySelector('.player__name');
 
-const audioDataList = []
-const audioNames = [
+const audioDataList = JSON.parse(localStorage.getItem('audioDataList')) || []
+const audioNames = JSON.parse(localStorage.getItem('audioNames')) || [
     "DK feat. Вирус - Ты меня не ищи.mp3",
     "EQRIC, JOZUA, ROBBE - TiK ToK.mp3",
     "EQRIC, Noreal, Muffin - In The Name Of Love.mp3",
@@ -16,23 +16,29 @@ const audioNames = [
     "Paul Engemann - Scarface (Push It To The Limit).mp3"
 ]
 
-for (let name of audioNames) {
-    const nameArr = name.split(".")
-    nameArr.pop()
-    const songName = nameArr.join(' ')
-    const audioDataItem = {
-        name: songName,
-        src: './audio/' + name,
-        playlists: ['Моя музыка']
+if(!audioDataList.length) {
+    for (let name of audioNames) {
+        const nameArr = name.split(".")
+        nameArr.pop()
+        const songName = nameArr.join(' ')
+        const audioDataItem = {
+            name: songName,
+            src: './audio/' + name,
+            playlists: ['Моя музыка']
+        }
+        audioDataList.push(audioDataItem)
     }
-    audioDataList.push(audioDataItem)
 }
 
 let currentPlaylist = audioDataList
 const playlist =  document.querySelector('.playlist');
 
-const playlists = [{name: 'Моя музыка'}]
+const playlists = JSON.parse(localStorage.getItem('playlists')) || [{name: 'Моя музыка'}]
 const playlistsRow =  document.querySelector('.playlists__row');
+
+
+
+
 
 const createPlaylistItem = (song) => {
     const wrapper = document.createElement('div');
@@ -60,6 +66,7 @@ const createAddToPlaylistButton = (song, playlists) => {
         if(addToPlaylist.value !== 'Добавить в плейлист' 
         && !song.playlists.includes(addToPlaylist.value)) {
             song.playlists.push(addToPlaylist.value)
+            localStorage.setItem('audioDataList', JSON.stringify(audioDataList));
         }
     })
 
@@ -97,13 +104,13 @@ const updatePlaylist = (item) => {
     currentPlaylist = playlistSongs
     for(let song of playlistSongs) {
         const itemWrapper = createPlaylistItem(song);
-
         const buttonsField = document.createElement('div');
         buttonsField.className = 'buttons__field'
         const deleteFromPlaylistButton = createDeleteButton()
         deleteFromPlaylistButton.addEventListener('click', (e) => {
             e.stopPropagation()
             song.playlists = song.playlists.filter(playlist =>  playlist!== item.name)
+            localStorage.setItem('audioDataList', JSON.stringify(audioDataList));
             itemWrapper.remove()
         })
 
@@ -155,7 +162,7 @@ const createPlaylistBlock = (item) => {
     playlistWrapper.appendChild(playlistTitle);
 
     playlist.replaceChildren();
-        updatePlaylist(item)
+    updatePlaylist(item)
 
     playlistWrapper.addEventListener('click', () => {
         playlist.replaceChildren();
@@ -198,7 +205,10 @@ audio.addEventListener('ended', function () {
     if(!addPlaylistInput.value) {
         return
     }
+    
     playlists.push({name: addPlaylistInput.value})
+    localStorage.setItem('playlists', JSON.stringify(playlists));
+
     const block = createPlaylistBlock({name: addPlaylistInput.value});
     playlistsRow.appendChild(block)
     addPlaylistInput.value = ''
