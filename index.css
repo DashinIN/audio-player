@@ -216,7 +216,6 @@ body {
 .player__part img {
     width: 25px;
     height: 25px;
-    margin-right: 15px;
 }
 .play__button {
     display: flex;
@@ -226,14 +225,17 @@ body {
     margin: 10px;
 }
 
-
-
-
-.play__button img {
-    width: 25px;
-    height: 25px;
+.player__part button {
+    margin-right: 10px;
+    border-radius: 8px;
+    transition: all .3s ease;
 }
 
+.player__selected {
+    border: 1px solid black;
+    background-color: rgba(137, 43, 226, 0.275);
+    box-shadow: 1px 1px 10px rgba(137, 43, 226, 0.308);
+}
 
 
 .modal {
@@ -248,7 +250,6 @@ body {
     background: rgba(5, 0, 10, 0.30);
     
 }
-  
   
 .modal-content {
     background-color: white;
@@ -320,7 +321,7 @@ input[type=range] {
     height: 25px;
     -webkit-appearance: none;
     margin: 10px 0;
-    max-width: 100px;
+    max-width: 80px;
 }
 
 input[type=range]:focus {
@@ -472,11 +473,17 @@ input[type=range]::-webkit-slider-runnable-track {
     }
     .player__wrapper {
         height: 70px;
-       
+        overflow: hidden;
     }
 
     .time__bar {
-        width: 350px;
+       min-width: 200px;
     }
+   
 }
 
+@media (min-width:1200px) {
+.time__bar {
+       min-width: 400px;
+    }
+}

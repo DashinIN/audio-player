@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./index.css">
-    <title>title</title>
-
+    <title>Audio player</title>
 </head>
 <body>
     <header class="header">
@@ -13,9 +12,7 @@
     </header>
     <main class="main">
         <aside class="sidebar">
-            <div class="playlists__row">
-
-            </div>
+            <div class="playlists__row"></div>
             <div class="addPlaylist__wrapper">
                 <input class="playlist__name" placeholder="Create playlist" type="text">
                 <button class="playlist__add">add</button>
@@ -25,7 +22,6 @@
         <div class="content">
             <canvas id="audioVisualizer" ></canvas>
             <div class="playlist">
-
             </div>
             <div class="player__wrapper">
                 <audio   id="audioPlayer" display="none" preload="metadata"></audio>
@@ -34,8 +30,13 @@
                         <button class="play__button">
                             <img src="./assets/play.svg" alt="play">
                         </button>
+                        <button class="repeat__button">
+                            <img src="./assets/repeat.svg" alt="play">
+                        </button>
+                        <button class="random__button">
+                            <img src="./assets/random.svg" alt="play">
+                        </button>
                         <p class="player__name"></p>
-                        
                     </div>
                     <div class="player__part">
                         <input type="range" class="time__bar" min="0" step="1" value="0">
@@ -47,7 +48,6 @@
             </div>
         </div>
     </main>
-
     <script  type="module" src="./js/player.js"></script>
     <script src="./js/visualizer.js"></script>
     <script  type="module" src="./js/script.js"></script>

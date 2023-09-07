@@ -1,3 +1,5 @@
+
+//Логика скрытия и развертывания сайдбара
 const sidebar = document.querySelector('.sidebar');
 const sidebarToggleButton =  document.querySelector('.sidebar__toggle');
 const sidebarToggleIcon =  document.querySelector('.sidebar__toggle img');

@@ -1,5 +1,7 @@
 import { formatTime } from "./formatTime.js";
 
+
+//Логика работы плеера
 const audio = document.getElementById('audioPlayer');
 const playPauseButton =  document.querySelector('.play__button img');
 
@@ -8,7 +10,7 @@ const currentTime =  document.querySelector('.current__time');
 const totalTime =  document.querySelector('.total__time');
 const volumeBar =  document.querySelector('.volume__bar');
 
-
+//При нажатии на кнопку воспроизвеления либо останавливаем либо включаем трек
 playPauseButton.addEventListener('click', function () {
     if (audio.paused) {
         audio.play();
@@ -20,8 +22,7 @@ playPauseButton.addEventListener('click', function () {
 });
 
 let updateInterval;
-
-
+//Вносим временной интервал для изменения временной дорожки
 audio.addEventListener('timeupdate', function () {
     const currentTimeInSeconds = audio.currentTime;
     const durationInSeconds = audio.duration;
@@ -38,6 +39,7 @@ audio.addEventListener('timeupdate', function () {
 
 
 audio.addEventListener('play', function () {
+    //Интервал устанавливаем одну секунду для избежания лагов при взаимодействии с инпутом
     updateInterval = setInterval(function () {
         const currentTimeInSeconds = audio.currentTime;
         const durationInSeconds = audio.duration;
@@ -53,19 +55,19 @@ audio.addEventListener('play', function () {
     }, 1000); // Обновление каждую секунду
 });
 
-
+//При остановки трека интервал отчищаем
 audio.addEventListener('pause', function () {
     clearInterval(updateInterval);
 });
 
-
+//При перемотке вычислям новое положение и отчищаем старый интервал
 seekBar.addEventListener('input', function () {
     clearInterval(updateInterval);
     const seekTime = (seekBar.value / 100) * audio.duration;
     audio.currentTime = seekTime;
 });
 
-
+//При изменении положения перемотки выполняем ту же логику как и при начале проигрывания
 seekBar.addEventListener('change', function () {
     updateInterval = setInterval(function () {
         const currentTimeInSeconds = audio.currentTime;
@@ -82,7 +84,7 @@ seekBar.addEventListener('change', function () {
     }, 1000); // Обновление каждую секунду
 });
 
-    
+//Изменение громкости
 volumeBar.addEventListener('change', function () {
     audio.volume = volumeBar.value;
 });
