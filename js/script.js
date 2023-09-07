@@ -24,7 +24,7 @@ if(!audioDataList.length) {
         const audioDataItem = {
             name: songName,
             src: './audio/' + name,
-            playlists: ['Моя музыка']
+            playlists: ['My music']
         }
         audioDataList.push(audioDataItem)
     }
@@ -33,7 +33,7 @@ if(!audioDataList.length) {
 let currentPlaylist = audioDataList
 const playlist =  document.querySelector('.playlist');
 
-const playlists = JSON.parse(localStorage.getItem('playlists')) || [{name: 'Моя музыка'}]
+const playlists = JSON.parse(localStorage.getItem('playlists')) || [{name: 'My music'}]
 const playlistsRow =  document.querySelector('.playlists__row');
 
 
@@ -50,6 +50,10 @@ const createPlaylistItem = (song) => {
 const createAddToPlaylistButton = (song, playlists) => {
     if(playlists.length <= 1) return
     const addToPlaylistButton = document.createElement('button');
+    const addToPlaylistIcon = document.createElement('img');
+    addToPlaylistIcon.classList.add('points')
+    addToPlaylistIcon.src = './assets/points.svg'
+    addToPlaylistButton.appendChild(addToPlaylistIcon)
     const addToPlaylist =  document.createElement('select');
     const emptyOption =  document.createElement('option');
     emptyOption.textContent = 'Добавить в плейлист'

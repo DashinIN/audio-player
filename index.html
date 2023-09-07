@@ -10,9 +10,6 @@
 <body>
     <header class="header">
         <h1 class="header__title">Audio player</h1>
-        <nav class="header__nav">
-            <button class="addItem">Добавить</button>
-        </nav>
     </header>
     <main class="main">
         <aside class="sidebar">
@@ -20,8 +17,8 @@
 
             </div>
             <div class="addPlaylist__wrapper">
-                <input class="playlist__name" placeholder="Создать плейлист" type="text">
-                <button class="playlist__add">Добавить</button>
+                <input class="playlist__name" placeholder="Create playlist" type="text">
+                <button class="playlist__add">add</button>
             </div>
             <button class="sidebar__toggle"><img src="./assets/arrow.svg" alt="toggle"></button>
         </aside>
@@ -51,24 +48,7 @@
         </div>
     </main>
 
-    <div class="modal">
-        <div class="modal-content">
-            <form class="add__form">
-                <div class="modal__header">
-                    <p>Load</p>
-                    <button class="close">close</button>
-                </div>
-                <div class="form__row">
-                    <input type="file" class="file-input">
-                    <button type="submit"  class="form__submit">Загрузить</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
     <script  type="module" src="./js/player.js"></script>
-    <script src="./js/modal.js"></script>
     <script src="./js/visualizer.js"></script>
     <script  type="module" src="./js/script.js"></script>
     <script src="./js/sidebar.js"></script>

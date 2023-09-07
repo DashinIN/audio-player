@@ -42,7 +42,9 @@ body {
     align-items: center;
     justify-content: space-between;
 }
-
+.header__title {
+    margin: 20px;
+}
 .main {
     display: flex;
     flex-direction: column;
@@ -91,7 +93,7 @@ body {
     flex-direction: column;
     gap: 12px;
     padding: 15px;
-    max-height: calc(100% - 70px);
+    max-height: 50vh;
     overflow-x: hidden;
     overflow-y: scroll;
 }
@@ -118,6 +120,9 @@ body {
     position: absolute;
     display: none;
     right: 0;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
 .item__wrapper button:hover select {
@@ -135,7 +140,20 @@ body {
 
 .buttons__field {
     display: flex;
+
     user-select: none;
+}
+
+.buttons__field button {
+    background-color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.points {
+    width: 20px;
+    height: 20px;
 }
 
 
@@ -160,7 +178,7 @@ body {
 #audioVisualizer {
     display: block;
     width: 100%;
-    height: 70px;
+    height: 62px;
     box-shadow: 0px 1px 1px rgba(137, 43, 226, 0.445);
   }
 
@@ -257,6 +275,13 @@ body {
 .playlist__name {
     flex-grow: 2;
     border: none;
+      padding-left: 20px;
+}
+
+.playlist__name::placeholder {
+    font-size: 0.9rem;
+    letter-spacing: 0.9px;
+  
 }
 
 .playlist__add {
@@ -271,8 +296,7 @@ body {
 }
 
 .sidebar__toggle {
-   align-self: flex-end;
-   margin-top: auto;
+  display: none;
 }
 
 .sidebar__toggle img {
@@ -292,20 +316,140 @@ body {
 
 
 
+input[type=range] {
+    height: 25px;
+    -webkit-appearance: none;
+    margin: 10px 0;
+    max-width: 100px;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    height: 5px;
+    cursor: pointer;
+    animate: 0.2s;
+    box-shadow: 0px 0px 0px #000000;
+    background: blueviolet;
+    border-radius: 1px;
+    border: 0px solid #000000;
+}
+
+  input[type=range]::-webkit-slider-thumb {
+    box-shadow: 0px 0px 0px #000000;
+    border: 1px solid blueviolet;
+    height: 18px;
+    width: 18px;
+    border-radius: 25px;
+    background: rgba(137, 43, 226, 0.438);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -7px;
+  }
+
+  input[type=range]:focus::-webkit-slider-runnable-track {
+    background: blueviolet;
+  }
+
+  input[type=range]::-moz-range-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    animate: 0.2s;
+    box-shadow: 0px 0px 0px #000000;
+    background: blueviolet;
+    border-radius: 1px;
+    border: 0px solid #000000;
+  }
+
+  input[type=range]::-moz-range-thumb {
+    box-shadow: 0px 0px 0px #000000;
+    border: 1px solid blueviolet;
+    height: 18px;
+    width: 18px;
+    border-radius: 25px;
+    background: ;
+    cursor: pointer;
+  }
+
+  input[type=range]::-ms-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    animate: 0.2s;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+  }
+
+  input[type=range]::-ms-fill-lower {
+    background: blueviolet;
+    border: 0px solid #000000;
+    border-radius: 2px;
+    box-shadow: 0px 0px 0px #000000;
+  }
+
+  input[type=range]::-ms-fill-upper {
+    background: blueviolet;
+    border: 0px solid #000000;
+    border-radius: 2px;
+    box-shadow: 0px 0px 0px #000000;
+  }
+
+  input[type=range]::-ms-thumb {
+    margin-top: 1px;
+    box-shadow: 0px 0px 0px #000000;
+    border: 1px solid blueviolet;
+    height: 18px;
+    width: 18px;
+    border-radius: 25px;
+    background: rgba(137, 43, 226, 0.438);
+    cursor: pointer;
+  }
+
+  input[type=range]:focus::-ms-fill-lower {
+    background: blueviolet;
+  }
+
+  input[type=range]:focus::-ms-fill-upper {
+    background: blueviolet;
+  }
+
+
+
+
 
 
 @media (min-width: 1024px) {
+
+    input[type=range] {
+        max-width: none;
+      }
+
+      .playlist {
+        max-height: calc(100% - 70px);
+      }
+
     .modal {
         justify-content: center;
         align-items: center;
     }
+
+    .sidebar__toggle {
+        align-self: flex-end;
+        margin-top: auto;
+        display: block;
+    }
+
     .modal-content {
         width: 400px;
         height: auto;
         border-radius: 15px;
       }
 
-      .sidebar {
+    .sidebar {
         min-width: 400px;
         transition: all .5s ease;
         overflow: hidden;
@@ -336,91 +480,3 @@ body {
     }
 }
 
-
-input[type=range] {
-    height: 25px;
-    -webkit-appearance: none;
-    margin: 10px 0;
-  }
-  input[type=range]:focus {
-    outline: none;
-  }
-  input[type=range]::-webkit-slider-runnable-track {
-    height: 5px;
-    cursor: pointer;
-    animate: 0.2s;
-    box-shadow: 0px 0px 0px #000000;
-    background: blueviolet;
-    border-radius: 1px;
-    border: 0px solid #000000;
-  }
-  input[type=range]::-webkit-slider-thumb {
-    box-shadow: 0px 0px 0px #000000;
-    border: 1px solid blueviolet;
-    height: 18px;
-    width: 18px;
-    border-radius: 25px;
-    background: rgba(137, 43, 226, 0.438);
-    cursor: pointer;
-    -webkit-appearance: none;
-    margin-top: -7px;
-  }
-  input[type=range]:focus::-webkit-slider-runnable-track {
-    background: blueviolet;
-  }
-  input[type=range]::-moz-range-track {
-    width: 100%;
-    height: 5px;
-    cursor: pointer;
-    animate: 0.2s;
-    box-shadow: 0px 0px 0px #000000;
-    background: blueviolet;
-    border-radius: 1px;
-    border: 0px solid #000000;
-  }
-  input[type=range]::-moz-range-thumb {
-    box-shadow: 0px 0px 0px #000000;
-    border: 1px solid blueviolet;
-    height: 18px;
-    width: 18px;
-    border-radius: 25px;
-    background: ;
-    cursor: pointer;
-  }
-  input[type=range]::-ms-track {
-    width: 100%;
-    height: 5px;
-    cursor: pointer;
-    animate: 0.2s;
-    background: transparent;
-    border-color: transparent;
-    color: transparent;
-  }
-  input[type=range]::-ms-fill-lower {
-    background: blueviolet;
-    border: 0px solid #000000;
-    border-radius: 2px;
-    box-shadow: 0px 0px 0px #000000;
-  }
-  input[type=range]::-ms-fill-upper {
-    background: blueviolet;
-    border: 0px solid #000000;
-    border-radius: 2px;
-    box-shadow: 0px 0px 0px #000000;
-  }
-  input[type=range]::-ms-thumb {
-    margin-top: 1px;
-    box-shadow: 0px 0px 0px #000000;
-    border: 1px solid blueviolet;
-    height: 18px;
-    width: 18px;
-    border-radius: 25px;
-    background: rgba(137, 43, 226, 0.438);
-    cursor: pointer;
-  }
-  input[type=range]:focus::-ms-fill-lower {
-    background: blueviolet;
-  }
-  input[type=range]:focus::-ms-fill-upper {
-    background: blueviolet;
-  }
