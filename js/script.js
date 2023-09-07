@@ -58,7 +58,7 @@ const createAddToPlaylistButton = (song, playlists) => {
     addToPlaylistButton.appendChild(addToPlaylistIcon)
     const addToPlaylist =  document.createElement('select');
     const emptyOption =  document.createElement('option');
-    emptyOption.textContent = 'Добавить в плейлист'
+    emptyOption.textContent = 'Add to playlist'
     addToPlaylist.appendChild(emptyOption)
     for (let i = 1; i < playlists.length; i++) {
         //Заполняем select вариантами с другими плейлистами
