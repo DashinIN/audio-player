@@ -249,11 +249,7 @@ audio.addEventListener('ended', function () {
         itemWrappers[currentTrackIndex].classList.add('playing')
     //При режиме случайного воспроизведения запускается случайный трек из текущего плейлиста
     } else if (random) {
-        let index
-        do {
-         index = Math.floor(Math.random() * currentPlaylist.length)
-        } while (index === currentTrackIndex)
-        console.log(index)
+        const index = Math.floor(Math.random() * currentPlaylist.length)
         audio.src = currentPlaylist[index].src;
         playerName.textContent = currentPlaylist[index].name
         itemWrappers[index].classList.add('playing')
